@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Latest Post on Outlier Blog</title>
+    <link>/blog/</link>
+    <description>Recent content in Latest Post on Outlier Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 02 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding Confusion Matrix</title>
+      <link>/blog/2023-03-02-understanding-confusion-matrix/</link>
+      <pubDate>Thu, 02 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2023-03-02-understanding-confusion-matrix/</guid>
+      <description>When working with machine learning models, it is essential to evaluate their performance to determine if they are making accurate predictions. One of the most popular methods of evaluating the performance of a model is by using a confusion matrix. A confusion matrix is a table that is used to evaluate the accuracy of a classification model.
+What is a Confusion Matrix? A confusion matrix is an essential tool used to evaluate the performance of a classification model.</description>
+    </item>
+    
+    <item>
+      <title>Addressing Class Imbalance in Classification</title>
+      <link>/blog/2023-02-21-addressing-class-imbalance-in-classification/</link>
+      <pubDate>Tue, 21 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2023-02-21-addressing-class-imbalance-in-classification/</guid>
+      <description>Class imbalance in binary classification refers to a situation where one class (minority class) has significantly fewer instances compared to the other class (majority class). For instance, in a customer attrition prediction task, the minority class could be customers who churned or left, while the majority class is customers who stayed with the company.
+Class imbalance can pose a significant challenge in machine learning, particularly for binary classification tasks because most machine learning algorithms assume that the class distribution is balanced.</description>
+    </item>
+    
+    <item>
+      <title>Using Elbow Method to Determine Optimal Number of Clusters</title>
+      <link>/blog/2023-02-12-using-elbow-method-to-determine-optimal-number-of-clusters/</link>
+      <pubDate>Sun, 12 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2023-02-12-using-elbow-method-to-determine-optimal-number-of-clusters/</guid>
+      <description>The elbow method is an important tool in the field of machine learning, particularly for data clustering. It provides a way to determine the optimal number of clusters for a clustering algorithm, which is crucial for effectively modeling and understanding complex data. The basic idea behind the elbow method is that increasing the number of clusters will result in a decrease in the within-cluster sum of squared distances (WCSS). Still, at some point, the decrease will no longer be significant enough to justify the increase in the number of clusters.</description>
+    </item>
+    
+  </channel>
+</rss>

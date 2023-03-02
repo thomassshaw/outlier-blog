@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.111.0">
+<title>Addressing Class Imbalance in Classification | Outlier Blog</title>
+
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Class imbalance can pose a significant challenge in machine learning, particularly for binary classification tasks because most machine learning algorithms assume that the class distribution is balanced.">
+
+
+<meta property="og:site_name" content="Outlier Blog">
+<meta property="og:title" content="Addressing Class Imbalance in Classification | Outlier Blog">
+<meta property="og:description" content="Class imbalance can pose a significant challenge in machine learning, particularly for binary classification tasks because most machine learning algorithms assume that the class distribution is balanced." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="/blog/2023-02-21-addressing-class-imbalance-in-classification/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="/blog/2023-02-21-addressing-class-imbalance-in-classification/featured.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="/blog/2023-02-21-addressing-class-imbalance-in-classification/featured.jpg" >
+    
+    
+  <meta itemprop="name" content="Addressing Class Imbalance in Classification">
+<meta itemprop="description" content="Class imbalance in binary classification refers to a situation where one class (minority class) has significantly fewer instances compared to the other class (majority class). For instance, in a customer attrition prediction task, the minority class could be customers who churned or left, while the majority class is customers who stayed with the company.
+Class imbalance can pose a significant challenge in machine learning, particularly for binary classification tasks because most machine learning algorithms assume that the class distribution is balanced."><meta itemprop="datePublished" content="2023-02-21T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-02-21T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1402"><meta itemprop="image" content="/blog/2023-02-21-addressing-class-imbalance-in-classification/featured.jpg">
+<meta itemprop="keywords" content="" />
+  
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.51ef9a26ed5e31959c31ea456a050c05fbf3938c97c284a4438715138fcb2e8d.css" integrity="sha256-Ue&#43;aJu1eMZWcMepFagUMBfvzk4yXwoSkQ4cVE4/LLo0=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.649b37902a58940ccb0994180039a0295d71785e8ede8221f0c9fb5bf73c9354.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container single">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Outlier Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About Me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Addressing Class Imbalance in Classification</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Thomas Shaw in <a href="/categories/python">python</a>  <a href="/categories/classification">classification</a> </p>
+        <p class="f7 db mv0 ttu">February 21, 2023</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Class imbalance in binary classification refers to a situation where one class (minority class) has significantly fewer instances compared to the other class (majority class). For instance, in a customer attrition prediction task, the minority class could be customers who churned or left, while the majority class is customers who stayed with the company.</p>
+<p>Class imbalance can pose a significant challenge in machine learning, particularly for binary classification tasks because most machine learning algorithms assume that the class distribution is balanced. When the class distribution is imbalanced, the model may be biased towards the majority class. The model will quickly learn that predicting the most frequent class will lead to great results, leading to poor performance in predicting the minority class.</p>
+<p>In the case of customer attrition, class imbalance occurs when the number of churned customers is significantly lower than the number of customers who have stayed. For example, if there are 1000 customers, and only 10 have churned, then the class distribution is imbalanced, and the minority class (churned customers) accounts for only 1% of the total dataset.</p>
+<p>In this article, we will explore the causes and consequences of class imbalance in binary classification tasks and examine various strategies for dealing with class imbalance, such as oversampling, undersampling, and synthetic data generation, and highlight the drawbacks of each approach.</p>
+<p><br></br></p>
+
+
+
+
+<h2 id="causes-of-class-imbalance">Causes of Class Imbalance
+  <a href="#causes-of-class-imbalance"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+
+
+
+
+<h3 id="1-natural-occurrence">1. Natural occurrence
+  <a href="#1-natural-occurrence"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>In some domains, the minority class may naturally occur less frequently. For example, in fraud detection, only a small percentage of transactions are fraudulent.</p>
+
+
+
+
+<h3 id="2-data-collection">2. Data collection
+  <a href="#2-data-collection"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Class imbalance can also be caused by the way data is collected. For instance, in a medical study, the number of healthy individuals may significantly outnumber those with a particular disease.</p>
+
+
+
+
+<h3 id="3-sampling-bias">3. Sampling bias
+  <a href="#3-sampling-bias"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>When the data collection process is biased towards a particular group, it can result in class imbalance. For example, if a survey on job satisfaction is conducted only among current employees, the number of employees who left the organization may be significantly lower, leading to class imbalance.</p>
+
+
+
+
+<h3 id="4-human-biases">4. Human biases
+  <a href="#4-human-biases"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Human biases, such as racial or gender biases, can also contribute to class imbalance in data.</p>
+<p><br></br></p>
+
+
+
+
+<h2 id="consequences-of-class-imbalance">Consequences of Class Imbalance
+  <a href="#consequences-of-class-imbalance"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+
+
+
+
+<h3 id="1-biased-models">1. Biased models
+  <a href="#1-biased-models"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Most machine learning algorithms are designed to optimize accuracy, leading to biased models that perform poorly on the minority class. Models trained on imbalanced data may result in a high number of false negatives, i.e., cases where the minority class is misclassified as the majority class.</p>
+
+
+
+
+<h3 id="2-overfitting">2. Overfitting
+  <a href="#2-overfitting"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Overfitting occurs when the model learns the characteristic of the training data rather than the underlying patterns. In imbalanced datasets, overfitting is more likely to occur as the model tends to learn more about the majority class, leading to poor generalization performance.</p>
+
+
+
+
+<h3 id="3-misleading-evaluation-metrics">3. Misleading evaluation metrics
+  <a href="#3-misleading-evaluation-metrics"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>In imbalanced datasets, accuracy can be a misleading evaluation metric. For example, if the majority class accounts for 95% of the dataset, a model that predicts only the majority class will have an accuracy of 95%. However, such a model is useless for practical purposes, as it fails to detect the minority class of interest.</p>
+
+
+
+
+<h3 id="4-increased-cost-of-misclassification">4. Increased cost of misclassification
+  <a href="#4-increased-cost-of-misclassification"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>In some applications, the cost of misclassifying the minority class can be significantly higher than the majority class. For instance, in medical diagnosis, missing a positive diagnosis can have severe consequences for the patient’s health. In such cases, models trained on imbalanced data can lead to significant costs and risks.</p>
+
+
+
+
+<h3 id="5-unfairness-and-biases">5. Unfairness and biases
+  <a href="#5-unfairness-and-biases"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>In some cases, class imbalance can be a result of human biases, leading to unfair or biased models. For instance, if a dataset on job applications contains a disproportionately low number of applications from a particular demographic, models trained on this data may be biased towards the majority group, leading to unfair hiring practices.</p>
+<p><br></br></p>
+
+
+
+
+<h2 id="dealing-with-class-imbalance">Dealing with Class Imbalance
+  <a href="#dealing-with-class-imbalance"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Several techniques can be employed to address the class imbalance, such as oversampling the minority class, undersampling the majority class, and using synthetic data generation techniques to create new samples for the minority class. To implement these techniques in Python, the <code>imbalanced-learn</code> library can be used. <code>imbalanced-learn</code> is a powerful Python library that provides a range of tools to handle class imbalance in machine learning tasks. It offers a variety of resampling techniques such as oversampling, undersampling, and hybrid methods, which can be used to balance the class distribution. In addition, the library provides a set of evaluation metrics for measuring the performance of machine learning models on imbalanced datasets, along with methods for ensemble learning and cost-sensitive learning.</p>
+<p>In this example, we generated a dataset with 1000 samples, 2 features, and 2 classes, with a class imbalance of 90:10 (the majority class has a weight of 0.9, and the minority class has a weight of 0.1). We then converted the numpy array to a pandas DataFrame and plot the class distribution to verify that the dataset is imbalanced.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">pandas</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">pd</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">matplotlib.pyplot</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">seaborn</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">sns</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">sklearn.datasets</span> <span style="color:#000;font-weight:bold">import</span> make_classification
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># generate a toy dataset with 1000 samples, 2 features, and 2 classes</span>
+</span></span><span style="display:flex;"><span>X, y <span style="color:#000;font-weight:bold">=</span> make_classification(n_samples<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1000</span>, n_features<span style="color:#000;font-weight:bold">=</span><span style="color:#099">2</span>, n_informative<span style="color:#000;font-weight:bold">=</span><span style="color:#099">2</span>,
+</span></span><span style="display:flex;"><span>                            n_redundant<span style="color:#000;font-weight:bold">=</span><span style="color:#099">0</span>, n_clusters_per_class<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>, weights<span style="color:#000;font-weight:bold">=</span>[<span style="color:#099">0.9</span>, <span style="color:#099">0.1</span>],
+</span></span><span style="display:flex;"><span>                            random_state<span style="color:#000;font-weight:bold">=</span><span style="color:#099">42</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># convert the numpy array to a pandas DataFrame</span>
+</span></span><span style="display:flex;"><span>df <span style="color:#000;font-weight:bold">=</span> pd<span style="color:#000;font-weight:bold">.</span>DataFrame(X, columns<span style="color:#000;font-weight:bold">=</span>[<span style="color:#d14">&#39;Feature 1&#39;</span>, <span style="color:#d14">&#39;Feature 2&#39;</span>])
+</span></span><span style="display:flex;"><span>df[<span style="color:#d14">&#39;Target&#39;</span>] <span style="color:#000;font-weight:bold">=</span> y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sns<span style="color:#000;font-weight:bold">.</span>countplot(x<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;Target&#39;</span>, data<span style="color:#000;font-weight:bold">=</span>df)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>show()
+</span></span></code></pre></div><p><img src="original.png" alt="Original dataset"></p>
+
+
+
+
+<h3 id="1-oversampling">1. Oversampling
+  <a href="#1-oversampling"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Oversampling involves creating more instances of the minority class by randomly duplicating them or creating new synthetic instances. This technique aims to balance the class distribution, making the model less biased towards the majority class. However, oversampling can lead to overfitting, where the model performs well on the training data but poorly on the test data. It can also increase the computational cost, particularly if the dataset is already large.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">imblearn.over_sampling</span> <span style="color:#000;font-weight:bold">import</span> RandomOverSampler
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># apply oversampling to the dataset</span>
+</span></span><span style="display:flex;"><span>oversampler <span style="color:#000;font-weight:bold">=</span> RandomOverSampler(random_state<span style="color:#000;font-weight:bold">=</span><span style="color:#099">42</span>)
+</span></span><span style="display:flex;"><span>X_resampled, y_resampled <span style="color:#000;font-weight:bold">=</span> oversampler<span style="color:#000;font-weight:bold">.</span>fit_resample(X, y)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># create a new Pandas DataFrame to store the resampled dataset</span>
+</span></span><span style="display:flex;"><span>df_resampled <span style="color:#000;font-weight:bold">=</span> pd<span style="color:#000;font-weight:bold">.</span>DataFrame(X_resampled, columns<span style="color:#000;font-weight:bold">=</span>[<span style="color:#d14">&#39;Feature 1&#39;</span>, <span style="color:#d14">&#39;Feature 2&#39;</span>])
+</span></span><span style="display:flex;"><span>df_resampled[<span style="color:#d14">&#39;Target&#39;</span>] <span style="color:#000;font-weight:bold">=</span> y_resampled
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># plot the distribution of the resampled dataset</span>
+</span></span><span style="display:flex;"><span>sns<span style="color:#000;font-weight:bold">.</span>countplot(x<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;Target&#39;</span>, data<span style="color:#000;font-weight:bold">=</span>df_resampled)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>title(<span style="color:#d14">&#39;Oversample Minority Class&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>show()
+</span></span></code></pre></div><p><img src="oversample.png" alt="Oversample minority class"></p>
+
+
+
+
+<h3 id="2-undersampling">2. Undersampling
+  <a href="#2-undersampling"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Undersampling involves randomly removing instances from the majority class to balance the class distribution. This technique aims to reduce the bias towards the majority class and improve the performance of the model on the minority class. However, undersampling can lead to loss of information and may result in underfitting, where the model is unable to capture the complexity of the problem.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">imblearn.under_sampling</span> <span style="color:#000;font-weight:bold">import</span> RandomUnderSampler
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># apply undersampling to the dataset</span>
+</span></span><span style="display:flex;"><span>undersampler <span style="color:#000;font-weight:bold">=</span> RandomUnderSampler(random_state<span style="color:#000;font-weight:bold">=</span><span style="color:#099">42</span>)
+</span></span><span style="display:flex;"><span>X_resampled, y_resampled <span style="color:#000;font-weight:bold">=</span> undersampler<span style="color:#000;font-weight:bold">.</span>fit_resample(X, y)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># create a new Pandas DataFrame to store the resampled dataset</span>
+</span></span><span style="display:flex;"><span>df_resampled <span style="color:#000;font-weight:bold">=</span> pd<span style="color:#000;font-weight:bold">.</span>DataFrame(X_resampled, columns<span style="color:#000;font-weight:bold">=</span>[<span style="color:#d14">&#39;Feature 1&#39;</span>, <span style="color:#d14">&#39;Feature 2&#39;</span>])
+</span></span><span style="display:flex;"><span>df_resampled[<span style="color:#d14">&#39;Target&#39;</span>] <span style="color:#000;font-weight:bold">=</span> y_resampled
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># plot the distribution of the resampled dataset</span>
+</span></span><span style="display:flex;"><span>sns<span style="color:#000;font-weight:bold">.</span>countplot(x<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;Target&#39;</span>, data<span style="color:#000;font-weight:bold">=</span>df_resampled)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>title(<span style="color:#d14">&#39;Undersample Majority Class&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>show()
+</span></span></code></pre></div><p><img src="undersample.png" alt="Undersample majority class"></p>
+
+
+
+
+<h3 id="3-synthetic-data-generation">3. Synthetic data generation
+  <a href="#3-synthetic-data-generation"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Synthetic data generation involves creating new instances of the minority class using algorithms such as SMOTE (Synthetic Minority Over-sampling Technique) or ADASYN (Adaptive Synthetic Sampling). These algorithms generate synthetic instances by interpolating between existing minority class instances. While synthetic data generation can improve model performance on the minority class, it can also introduce noise and overfitting.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">imblearn.over_sampling</span> <span style="color:#000;font-weight:bold">import</span> SMOTE, ADASYN
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># apply SMOTE to the dataset</span>
+</span></span><span style="display:flex;"><span>smote <span style="color:#000;font-weight:bold">=</span> SMOTE(random_state<span style="color:#000;font-weight:bold">=</span><span style="color:#099">42</span>)
+</span></span><span style="display:flex;"><span>X_resampled_smote, y_resampled_smote <span style="color:#000;font-weight:bold">=</span> smote<span style="color:#000;font-weight:bold">.</span>fit_resample(X, y)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># create a new Pandas DataFrame to store the SMOTE resampled dataset</span>
+</span></span><span style="display:flex;"><span>df_resampled_smote <span style="color:#000;font-weight:bold">=</span> pd<span style="color:#000;font-weight:bold">.</span>DataFrame(X_resampled_smote, columns<span style="color:#000;font-weight:bold">=</span>[<span style="color:#d14">&#39;Feature 1&#39;</span>, <span style="color:#d14">&#39;Feature 2&#39;</span>])
+</span></span><span style="display:flex;"><span>df_resampled_smote[<span style="color:#d14">&#39;Target&#39;</span>] <span style="color:#000;font-weight:bold">=</span> y_resampled_smote
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># plot the distribution of the SMOTE resampled dataset</span>
+</span></span><span style="display:flex;"><span>sns<span style="color:#000;font-weight:bold">.</span>countplot(x<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;Target&#39;</span>, data<span style="color:#000;font-weight:bold">=</span>df_resampled_smote)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>title(<span style="color:#d14">&#39;Synthetic Minority Over-sampling Technique (SMOTE)&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>show()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># apply ADASYN to the dataset</span>
+</span></span><span style="display:flex;"><span>adasyn <span style="color:#000;font-weight:bold">=</span> ADASYN(random_state<span style="color:#000;font-weight:bold">=</span><span style="color:#099">42</span>)
+</span></span><span style="display:flex;"><span>X_resampled_adasyn, y_resampled_adasyn <span style="color:#000;font-weight:bold">=</span> adasyn<span style="color:#000;font-weight:bold">.</span>fit_resample(X, y)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># create a new Pandas DataFrame to store the ADASYN resampled dataset</span>
+</span></span><span style="display:flex;"><span>df_resampled_adasyn <span style="color:#000;font-weight:bold">=</span> pd<span style="color:#000;font-weight:bold">.</span>DataFrame(X_resampled_adasyn, columns<span style="color:#000;font-weight:bold">=</span>[<span style="color:#d14">&#39;Feature 1&#39;</span>, <span style="color:#d14">&#39;Feature 2&#39;</span>])
+</span></span><span style="display:flex;"><span>df_resampled_adasyn[<span style="color:#d14">&#39;Target&#39;</span>] <span style="color:#000;font-weight:bold">=</span> y_resampled_adasyn
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># plot the distribution of the ADASYN resampled dataset</span>
+</span></span><span style="display:flex;"><span>sns<span style="color:#000;font-weight:bold">.</span>countplot(x<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;Target&#39;</span>, data<span style="color:#000;font-weight:bold">=</span>df_resampled_adasyn)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>title(<span style="color:#d14">&#39;Adaptive Synthetic (ADASYN)&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>show()
+</span></span></code></pre></div><p><img src="smote.png" alt="SMOTE">
+<img src="adasyn.png" alt="ADASYN"></p>
+<p><br></br></p>
+
+
+
+
+<h2 id="conclusion">Conclusion
+  <a href="#conclusion"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>In conclusion, class imbalance is a common problem in binary classification tasks, and it can lead to poor performance of machine learning models. Fortunately, several strategies can be used to deal with this problem, such as oversampling, undersampling, and synthetic data generation. Each approach has its advantages and drawbacks, and the choice of the best strategy will depend on the specific task and the characteristics of the dataset. The <code>imbalanced-learn</code> package provides a comprehensive set of tools for implementing these strategies in Python, along with evaluation metrics for assessing the performance of models on imbalanced datasets. By carefully selecting the most appropriate technique and using these tools, we can improve the accuracy and reliability of our models in real-world applications with imbalanced data.</p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">February 21, 2023</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">7 minute read, 1402 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="/categories/python">python</a>  <a href="/categories/classification">classification</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="/blog/2023-03-02-understanding-confusion-matrix/">&larr; Understanding Confusion Matrix</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="/blog/2023-02-12-using-elbow-method-to-determine-optimal-number-of-clusters/">Using Elbow Method to Determine Optimal Number of Clusters &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+  </section>
+  	<div class="relative flex py-5 items-center">
+	</div>
+	<div class="flex justify-center">
+		<p style="margin-bottom: 1em;"><b>Support my work with a cup of ☕</b></p>
+	</div>
+	<div class="flex justify-center">
+		<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Donate', '#4c7021', 'N4N1EM0G5');kofiwidget2.draw();</script>
+	</div>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2023 Thomas Shaw
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/thomassshaw" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://medium.com/@thomassshaw" title="medium" target="_blank" rel="me noopener">
+      <i class="fab fa-medium fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/blog/index.xml" title="rss" >
+      <i class="fas fa-rss fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Contact form">Contact</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

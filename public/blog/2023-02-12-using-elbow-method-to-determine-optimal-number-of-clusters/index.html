@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.111.0">
+<title>Using Elbow Method to Determine Optimal Number of Clusters | Outlier Blog</title>
+
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="The elbow method is an important tool in the field of machine learning, particularly for data clustering.">
+
+
+<meta property="og:site_name" content="Outlier Blog">
+<meta property="og:title" content="Using Elbow Method to Determine Optimal Number of Clusters | Outlier Blog">
+<meta property="og:description" content="The elbow method is an important tool in the field of machine learning, particularly for data clustering." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="/blog/2023-02-12-using-elbow-method-to-determine-optimal-number-of-clusters/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="/blog/2023-02-12-using-elbow-method-to-determine-optimal-number-of-clusters/featured.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="/blog/2023-02-12-using-elbow-method-to-determine-optimal-number-of-clusters/featured.jpg" >
+    
+    
+  <meta itemprop="name" content="Using Elbow Method to Determine Optimal Number of Clusters">
+<meta itemprop="description" content="The elbow method is an important tool in the field of machine learning, particularly for data clustering. It provides a way to determine the optimal number of clusters for a clustering algorithm, which is crucial for effectively modeling and understanding complex data. The basic idea behind the elbow method is that increasing the number of clusters will result in a decrease in the within-cluster sum of squared distances (WCSS). Still, at some point, the decrease will no longer be significant enough to justify the increase in the number of clusters."><meta itemprop="datePublished" content="2023-02-12T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-02-12T00:00:00+00:00" />
+<meta itemprop="wordCount" content="942"><meta itemprop="image" content="/blog/2023-02-12-using-elbow-method-to-determine-optimal-number-of-clusters/featured.jpg">
+<meta itemprop="keywords" content="" />
+  
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.51ef9a26ed5e31959c31ea456a050c05fbf3938c97c284a4438715138fcb2e8d.css" integrity="sha256-Ue&#43;aJu1eMZWcMepFagUMBfvzk4yXwoSkQ4cVE4/LLo0=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.649b37902a58940ccb0994180039a0295d71785e8ede8221f0c9fb5bf73c9354.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container single">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Outlier Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About Me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Using Elbow Method to Determine Optimal Number of Clusters</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Thomas Shaw in <a href="/categories/python">python</a>  <a href="/categories/clustering">clustering</a> </p>
+        <p class="f7 db mv0 ttu">February 12, 2023</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>The elbow method is an important tool in the field of machine learning, particularly for data clustering. It provides a way to determine the optimal number of clusters for a clustering algorithm, which is crucial for effectively modeling and understanding complex data. The basic idea behind the elbow method is that increasing the number of clusters will result in a decrease in the within-cluster sum of squared distances (WCSS). Still, at some point, the decrease will no longer be significant enough to justify the increase in the number of clusters.</p>
+<p>In mathematical optimization, the concept of the “elbow” or “knee of a curve” is a commonly used heuristic to choose a point where diminishing returns are no longer worth the additional cost. In clustering, this means that one should choose a number of clusters so that adding another cluster does not significantly improve the modeling of the data. The elbow method works by plotting the WCSS against the number of clusters and finding the point where the decrease in WCSS slows down, creating an elbow-like shape in the plot. This elbow-like shape indicates the optimal number of clusters, with the region before the elbow being under-fitting and the region after being over-fitting.</p>
+<p><br></br></p>
+
+
+
+
+<h2 id="how-the-elbow-method-work">How The Elbow Method Work
+  <a href="#how-the-elbow-method-work"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>The elbow method is based on the principle that adding more clusters to the fit will improve the explanation of the variation in the data, but at a certain point, this improvement will start to slow down and the additional clusters will become redundant. For instance, if the actual data consists of k distinct groups, clustering with a number greater than k will lead to over-fitting, as the data will be divided into smaller, tighter clusters. Initially, the first few clusters will add significant information to the explanation of the variation, as the data contains that many distinct groups, but once the number of clusters surpasses the actual number of groups, the information added will decrease rapidly. This information drop is reflected in the graph of the explained variation versus the number of clusters, where there is a sudden change from a rapid increase to a slower increase, creating a sharp elbow-like shape in the graph. The elbow-like shape indicates the optimal number of clusters, with the region before the elbow being under-fitting and the region after being over-fitting.</p>
+<p><br></br></p>
+
+
+
+
+<h2 id="simplifying-the-elbow-method-with-the-kneed-library">Simplifying the Elbow Method with the kneed Library
+  <a href="#simplifying-the-elbow-method-with-the-kneed-library"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>The <code>kneed</code> library provides a simple and convenient way to determine the optimal number of clusters for a k-means clustering algorithm, without requiring manual inspection of the plot of WCSS against the number of clusters. The library provides a <code>KneeLocator</code> function that can be used to find the knee or elbow point in a given set of data, which can then be used to determine the optimal number of clusters.</p>
+<p>Installation is straightforward and can be done from PyPi.<br>
+<code>pip install kneed</code></p>
+<p>First, we create a toy dataset with 4 clusters using make_blobs function from scikit-learn.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">numpy</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">np</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">matplotlib.pyplot</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">kneed</span> <span style="color:#000;font-weight:bold">import</span> KneeLocator
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">sklearn.cluster</span> <span style="color:#000;font-weight:bold">import</span> KMeans
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">sklearn.datasets</span> <span style="color:#000;font-weight:bold">import</span> make_blobs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># generate toy dataset with 4 clusters</span>
+</span></span><span style="display:flex;"><span>X, y <span style="color:#000;font-weight:bold">=</span> make_blobs(n_samples<span style="color:#000;font-weight:bold">=</span><span style="color:#099">200</span>, centers<span style="color:#000;font-weight:bold">=</span><span style="color:#099">4</span>, random_state<span style="color:#000;font-weight:bold">=</span><span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>scatter(X[:,<span style="color:#099">0</span>], X[:,<span style="color:#099">1</span>], c<span style="color:#000;font-weight:bold">=</span>y)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>title(<span style="color:#d14">&#39;4 Clusters&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>show()
+</span></span></code></pre></div><p><img src="data.png" alt="Generated dataset with 4 clusters"></p>
+<p>Then, the optimal number of clusters can be determined by following these steps:</p>
+<ol>
+<li>
+<p>Calculating the WCSS (within-cluster sum of squared distances) for different values of k (number of clusters) using a for-loop. Here, <code>KMeans</code> class is used to fit the K-means algorithm to the data <code>X</code>. The <code>inertia_</code> attribute of the fitted KMeans object is used to calculate the WCSS and the result is appended to the wcss list.</p>
+</li>
+<li>
+<p>Plotting the WCSS versus the number of clusters.</p>
+</li>
+<li>
+<p>Finding the knee location using the <code>KneeLocator</code> class. The <code>KneeLocator</code> function takes three arguments: the range of values for the number of clusters, the WCSS values, and some other optional parameters such as the type of curve and the direction of the curve.</p>
+</li>
+<li>
+<p>Plotting the knee location on the WCSS versus the number of clusters plot. The <code>vlines</code> function is used to plot a vertical line at the knee location and the <code>scatter</code> function is used to plot a red dot at the knee location.</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># compute WCSS for different values of k</span>
+</span></span><span style="display:flex;"><span>wcss <span style="color:#000;font-weight:bold">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">1</span>, <span style="color:#099">11</span>):
+</span></span><span style="display:flex;"><span>    kmeans <span style="color:#000;font-weight:bold">=</span> KMeans(n_clusters<span style="color:#000;font-weight:bold">=</span>i, init<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;k-means++&#39;</span>, max_iter<span style="color:#000;font-weight:bold">=</span><span style="color:#099">300</span>, n_init<span style="color:#000;font-weight:bold">=</span><span style="color:#099">10</span>, random_state<span style="color:#000;font-weight:bold">=</span><span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>    kmeans<span style="color:#000;font-weight:bold">.</span>fit(X)
+</span></span><span style="display:flex;"><span>    wcss<span style="color:#000;font-weight:bold">.</span>append(kmeans<span style="color:#000;font-weight:bold">.</span>inertia_)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># plot WCSS vs no. of clusters</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>plot(<span style="color:#0086b3">range</span>(<span style="color:#099">1</span>, <span style="color:#099">11</span>), wcss)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>title(<span style="color:#d14">&#39;Elbow Method&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>xlabel(<span style="color:#d14">&#39;Number of clusters&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>ylabel(<span style="color:#d14">&#39;WCSS&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># find the knee location</span>
+</span></span><span style="display:flex;"><span>knee <span style="color:#000;font-weight:bold">=</span> KneeLocator(<span style="color:#0086b3">range</span>(<span style="color:#099">1</span>, <span style="color:#099">11</span>), wcss, curve<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;convex&#39;</span>, direction<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;decreasing&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># plot the knee location</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>vlines(knee<span style="color:#000;font-weight:bold">.</span>knee, plt<span style="color:#000;font-weight:bold">.</span>ylim()[<span style="color:#099">0</span>], plt<span style="color:#000;font-weight:bold">.</span>ylim()[<span style="color:#099">1</span>], linestyles<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;dashed&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>scatter(knee<span style="color:#000;font-weight:bold">.</span>knee, knee<span style="color:#000;font-weight:bold">.</span>knee_y, color<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;red&#39;</span>, s<span style="color:#000;font-weight:bold">=</span><span style="color:#099">30</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>text(knee<span style="color:#000;font-weight:bold">.</span>knee<span style="color:#000;font-weight:bold">+</span><span style="color:#099">0.2</span>, knee<span style="color:#000;font-weight:bold">.</span>knee_y<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1000</span>, <span style="color:#d14">f</span><span style="color:#d14">&#39;Knee: </span><span style="color:#d14">{</span>knee<span style="color:#000;font-weight:bold">.</span>knee<span style="color:#d14">}</span><span style="color:#d14">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># show the plot</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#000;font-weight:bold">.</span>show()
+</span></span></code></pre></div><p><img src="elbow.png" alt="Optimal number of clusters = 4"></p>
+<p><br></br></p>
+
+
+
+
+<h2 id="drawbacks-and-limitations">Drawbacks and Limitations
+  <a href="#drawbacks-and-limitations"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<ol>
+<li>
+<p><strong>Ambiguity</strong>: In some cases, there may not be a clear “elbow” in the plot, making it difficult to determine the optimal number of clusters. This can result in the method failing to identify the appropriate number of clusters.</p>
+</li>
+<li>
+<p><strong>Multimodal data</strong>: If the data contains multiple distinct clusters with different sizes and densities, the elbow method may produce inaccurate results. In these cases, other methods such as Silhouette analysis or Gap statistics may be more appropriate.</p>
+</li>
+<li>
+<p><strong>Assumes linearity</strong>: The elbow method assumes that the WCSS decreases linearly with an increasing number of clusters. However, this may not always be the case in real-world data.</p>
+</li>
+<li>
+<p><strong>Limited to K-means</strong>: The elbow method is only applicable to the K-means clustering algorithm, and may not be suitable for other clustering algorithms such as Hierarchical Clustering or DBSCAN.</p>
+</li>
+</ol>
+<p>Despite these limitations, the elbow method is still widely used due to its simplicity and ease of implementation. However, it is important to consider other methods and interpret the results carefully to ensure that the correct number of clusters is chosen.</p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">February 12, 2023</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">5 minute read, 942 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="/categories/python">python</a>  <a href="/categories/clustering">clustering</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="/blog/2023-02-21-addressing-class-imbalance-in-classification/">&larr; Addressing Class Imbalance in Classification</a>
+  
+  
+  
+</div>
+
+      </footer>
+    </article>
+    
+  </section>
+  	<div class="relative flex py-5 items-center">
+	</div>
+	<div class="flex justify-center">
+		<p style="margin-bottom: 1em;"><b>Support my work with a cup of ☕</b></p>
+	</div>
+	<div class="flex justify-center">
+		<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Donate', '#4c7021', 'N4N1EM0G5');kofiwidget2.draw();</script>
+	</div>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2023 Thomas Shaw
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/thomassshaw" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://medium.com/@thomassshaw" title="medium" target="_blank" rel="me noopener">
+      <i class="fab fa-medium fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/blog/index.xml" title="rss" >
+      <i class="fas fa-rss fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Contact form">Contact</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

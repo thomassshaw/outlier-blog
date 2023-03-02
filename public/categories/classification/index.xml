@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>classification on Outlier Blog</title>
+    <link>/categories/classification/</link>
+    <description>Recent content in classification on Outlier Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 02 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/categories/classification/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding Confusion Matrix</title>
+      <link>/blog/2023-03-02-understanding-confusion-matrix/</link>
+      <pubDate>Thu, 02 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2023-03-02-understanding-confusion-matrix/</guid>
+      <description>When working with machine learning models, it is essential to evaluate their performance to determine if they are making accurate predictions. One of the most popular methods of evaluating the performance of a model is by using a confusion matrix. A confusion matrix is a table that is used to evaluate the accuracy of a classification model.
+What is a Confusion Matrix? A confusion matrix is an essential tool used to evaluate the performance of a classification model.</description>
+    </item>
+    
+    <item>
+      <title>Addressing Class Imbalance in Classification</title>
+      <link>/blog/2023-02-21-addressing-class-imbalance-in-classification/</link>
+      <pubDate>Tue, 21 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2023-02-21-addressing-class-imbalance-in-classification/</guid>
+      <description>Class imbalance in binary classification refers to a situation where one class (minority class) has significantly fewer instances compared to the other class (majority class). For instance, in a customer attrition prediction task, the minority class could be customers who churned or left, while the majority class is customers who stayed with the company.
+Class imbalance can pose a significant challenge in machine learning, particularly for binary classification tasks because most machine learning algorithms assume that the class distribution is balanced.</description>
+    </item>
+    
+  </channel>
+</rss>
