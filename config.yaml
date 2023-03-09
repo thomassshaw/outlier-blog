@@ -46,7 +46,7 @@ params:
   navallcaps: yes
   orgLocal: ''
   orgName: Thomas Shaw
-  sharing_image: /img/papillons.jpg
+  sharing_image: 
   social:
     - icon: github
       icon_pack: fab

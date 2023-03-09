@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.111.0">
+<title>4 Hyperparameters Optimization Frameworks for Machine Learning | Outlier Blog</title>
+
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Choosing the right hyperparameters can make or break a model’s performance.">
+
+
+<meta property="og:site_name" content="Outlier Blog">
+<meta property="og:title" content="4 Hyperparameters Optimization Frameworks for Machine Learning | Outlier Blog">
+<meta property="og:description" content="Choosing the right hyperparameters can make or break a model’s performance." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="/blog/2023-03-09-4-hyperparameters-optimization-frameworks-for-machine-learning/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="/blog/2023-03-09-4-hyperparameters-optimization-frameworks-for-machine-learning/featured.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="/blog/2023-03-09-4-hyperparameters-optimization-frameworks-for-machine-learning/featured.jpg" >
+    
+    
+  <meta itemprop="name" content="4 Hyperparameters Optimization Frameworks for Machine Learning">
+<meta itemprop="description" content="Machine learning models rely heavily on hyperparameters, which are essentially the configuration settings that control the performance and the behavior of the model. Properly tuning these hyperparameters can lead to significant improvements in the model&rsquo;s accuracy and overall performance. However, manual tuning of hyperparameters is hard can be a time-consuming task, often requiring many iterations and experimentation. That&rsquo;s where hyperparameter optimization frameworks come into play, which help automate the process of finding the optimal set of hyperparameters for a machine learning model."><meta itemprop="datePublished" content="2023-03-09T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-03-09T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1229"><meta itemprop="image" content="/blog/2023-03-09-4-hyperparameters-optimization-frameworks-for-machine-learning/featured.jpg">
+<meta itemprop="keywords" content="" />
+  
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.51ef9a26ed5e31959c31ea456a050c05fbf3938c97c284a4438715138fcb2e8d.css" integrity="sha256-Ue&#43;aJu1eMZWcMepFagUMBfvzk4yXwoSkQ4cVE4/LLo0=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.649b37902a58940ccb0994180039a0295d71785e8ede8221f0c9fb5bf73c9354.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container single">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Outlier Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About Me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">4 Hyperparameters Optimization Frameworks for Machine Learning</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Thomas Shaw in <a href="/categories/machine-learning">machine learning</a>  <a href="/categories/python">python</a> </p>
+        <p class="f7 db mv0 ttu">March 9, 2023</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Machine learning models rely heavily on hyperparameters, which are essentially the configuration settings that control the performance and the behavior of the model. Properly tuning these hyperparameters can lead to significant improvements in the model&rsquo;s accuracy and overall performance. However, manual tuning of hyperparameters is hard can be a time-consuming task, often requiring many iterations and experimentation. That&rsquo;s where hyperparameter optimization frameworks come into play, which help automate the process of finding the optimal set of hyperparameters for a machine learning model. In this blog post, we will explore some of the most popular hyperparameter optimization frameworks available, including Scikit-learn, Optuna, Hyperopt, and Ray Tune. This post will provide an overview of each framework and demonstrate how they can be used to optimize the hyperparameters for machine learning models.</p>
+
+
+
+
+<h3 id="1-scikit-learn">1. Scikit-learn
+  <a href="#1-scikit-learn"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Scikit-learn is a popular machine learning library in Python that includes a <code>GridSearchCV</code> class for grid search and <code>RandomizedSearchCV</code> class for random search. These classes can be used to perform hyperparameter tuning for a wide range of machine learning algorithms, including regression, classification, and clustering.</p>
+<p>One of the key features of Scikit-learn is its ease of use. It provides a simple and consistent interface for performing various machine learning tasks. Scikit-learn is also well-documented and has a large user community, which makes it easy to find help and examples when needed.</p>
+
+
+
+
+<h3 id="2-optuna">2. Optuna
+  <a href="#2-optuna"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Optuna is a powerful hyperparameter optimization library that uses a Bayesian approach to model the objective function. It supports various search algorithms, including grid search, random search, TPE, and CMA-ES and can be used for any machine learning framework, including TensorFlow, PyTorch, and scikit-learn. Optuna is designed to be easy to use and provides a convenient interface for defining search spaces and objective functions.</p>
+<p>One of the key features of Optuna is its flexibility. It provides a wide range of search algorithms and can optimize any user-defined objective function. Optuna also includes utilities for parallelizing the optimization process, which can speed up the search for the best set of hyperparameters.</p>
+
+
+
+
+<h3 id="3-hyperopt">3. Hyperopt
+  <a href="#3-hyperopt"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Hyperopt is a Python library for hyperparameter optimization that uses the Tree-structured Parzen Estimator (TPE) algorithm. It can be used with any machine learning library and supports both grid and random search.</p>
+<p>One of the key features of Hyperopt is its support for Bayesian optimization. The TPE algorithm used by Hyperopt is a Bayesian optimization algorithm that can efficiently search the hyperparameter space. Hyperopt also provides a simple and consistent interface for defining search spaces and objective functions.</p>
+
+
+
+
+<h3 id="4-ray-tune">4. Ray Tune
+  <a href="#4-ray-tune"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Ray Tune is a distributed hyperparameter tuning library that can be used with various machine learning libraries, including TensorFlow, PyTorch, and scikit-learn. It supports various search algorithms, including grid search, random search, and BOHB. Ray Tune is designed to be scalable and can run on large clusters or cloud environments. It also provides a convenient interface for defining search spaces and objective functions.</p>
+<p>One of the key features of Ray Tune is its scalability. It can run on large clusters or cloud environments and can efficiently parallelize the optimization process. Ray Tune also supports the BOHB algorithm, which is a state-of-the-art Bayesian optimization algorithm that can efficiently search the hyperparameter space.</p>
+
+
+
+
+<h2 id="example">Example
+  <a href="#example"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+
+
+
+
+<h3 id="the-dataset">The Dataset
+  <a href="#the-dataset"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>We&rsquo;ll use the well-known iris dataset, which is included in scikit-learn. This dataset consists of 150 samples with four features: sepal length, sepal width, petal length, and petal width. The goal is to predict the species of each sample, which can be one of three possible values: setosa, versicolor, or virginica.</p>
+<p>Let&rsquo;s load the dataset and split it into training and test sets:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">sklearn.datasets</span> <span style="color:#000;font-weight:bold">import</span> load_iris
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">sklearn.model_selection</span> <span style="color:#000;font-weight:bold">import</span> train_test_split
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>iris <span style="color:#000;font-weight:bold">=</span> load_iris()
+</span></span><span style="display:flex;"><span>X_train, X_test, y_train, y_test <span style="color:#000;font-weight:bold">=</span> train_test_split(
+</span></span><span style="display:flex;"><span>    iris<span style="color:#000;font-weight:bold">.</span>data, iris<span style="color:#000;font-weight:bold">.</span>target, test_size<span style="color:#000;font-weight:bold">=</span><span style="color:#099">0.2</span>, random_state<span style="color:#000;font-weight:bold">=</span><span style="color:#099">42</span>)
+</span></span></code></pre></div>
+
+
+
+<h3 id="the-model">The Model
+  <a href="#the-model"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>We&rsquo;ll use a support vector machine (SVM) classifier as our model. Specifically, we&rsquo;ll use scikit-learn&rsquo;s <code>SVC</code>class with a radial basis function (RBF) kernel.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">sklearn.svm</span> <span style="color:#000;font-weight:bold">import</span> SVC
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">train_svm</span>(C, gamma):
+</span></span><span style="display:flex;"><span>    clf <span style="color:#000;font-weight:bold">=</span> SVC(C<span style="color:#000;font-weight:bold">=</span>C, gamma<span style="color:#000;font-weight:bold">=</span>gamma)
+</span></span><span style="display:flex;"><span>    clf<span style="color:#000;font-weight:bold">.</span>fit(X_train, y_train)
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">return</span> clf
+</span></span></code></pre></div><p>This function takes two hyperparameters, <code>C</code>and <code>gamma</code>, as arguments and trains an SVM classifier on the training data.</p>
+
+
+
+
+<h3 id="scikit-learn">Scikit-learn
+  <a href="#scikit-learn"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Scikit-learn provides several ways to perform hyperparameter optimization. Here, we&rsquo;ll use <code>GridSearchCV</code>, which performs an exhaustive search over a specified parameter grid.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">sklearn.model_selection</span> <span style="color:#000;font-weight:bold">import</span> GridSearchCV
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>param_grid <span style="color:#000;font-weight:bold">=</span> {<span style="color:#d14">&#39;C&#39;</span>: [<span style="color:#099">0.1</span>, <span style="color:#099">1</span>, <span style="color:#099">10</span>, <span style="color:#099">100</span>],
+</span></span><span style="display:flex;"><span>              <span style="color:#d14">&#39;gamma&#39;</span>: [<span style="color:#099">0.01</span>, <span style="color:#099">0.1</span>, <span style="color:#099">1</span>, <span style="color:#099">10</span>]}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>svm <span style="color:#000;font-weight:bold">=</span> SVC(kernel<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;rbf&#39;</span>)
+</span></span><span style="display:flex;"><span>grid_search <span style="color:#000;font-weight:bold">=</span> GridSearchCV(svm, param_grid, cv<span style="color:#000;font-weight:bold">=</span><span style="color:#099">5</span>)
+</span></span><span style="display:flex;"><span>grid_search<span style="color:#000;font-weight:bold">.</span>fit(X_train, y_train)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">print</span>(<span style="color:#d14">f</span><span style="color:#d14">&#34;Best hyperparameters: </span><span style="color:#d14">{</span>grid_search<span style="color:#000;font-weight:bold">.</span>best_params_<span style="color:#d14">}</span><span style="color:#d14">&#34;</span>)
+</span></span></code></pre></div><p>We define a <code>param_grid</code> dictionary with the values we want to test for <code>C</code> and <code>gamma</code>. Then, we create an SVM classifier with an RBF kernel and pass it, along with the <code>param_grid</code> and the number of cross-validation folds (<code>cv=5</code>), to <code>GridSearchCV</code>.</p>
+
+
+
+
+<h3 id="optuna">Optuna
+  <a href="#optuna"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">optuna</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">objective</span>(trial):
+</span></span><span style="display:flex;"><span>    C <span style="color:#000;font-weight:bold">=</span> trial<span style="color:#000;font-weight:bold">.</span>suggest_loguniform(<span style="color:#d14">&#39;C&#39;</span>, <span style="color:#099">1e-4</span>, <span style="color:#099">1e4</span>)
+</span></span><span style="display:flex;"><span>    gamma <span style="color:#000;font-weight:bold">=</span> trial<span style="color:#000;font-weight:bold">.</span>suggest_loguniform(<span style="color:#d14">&#39;gamma&#39;</span>, <span style="color:#099">1e-4</span>, <span style="color:#099">1e4</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    clf <span style="color:#000;font-weight:bold">=</span> SVC(C<span style="color:#000;font-weight:bold">=</span>C, gamma<span style="color:#000;font-weight:bold">=</span>gamma)
+</span></span><span style="display:flex;"><span>    clf<span style="color:#000;font-weight:bold">.</span>fit(X_train, y_train)
+</span></span><span style="display:flex;"><span>    score <span style="color:#000;font-weight:bold">=</span> clf<span style="color:#000;font-weight:bold">.</span>score(X_test, y_test)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">return</span> score
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>study <span style="color:#000;font-weight:bold">=</span> optuna<span style="color:#000;font-weight:bold">.</span>create_study(direction<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;maximize&#39;</span>)
+</span></span><span style="display:flex;"><span>study<span style="color:#000;font-weight:bold">.</span>optimize(objective, n_trials<span style="color:#000;font-weight:bold">=</span><span style="color:#099">100</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">print</span>(<span style="color:#d14">f</span><span style="color:#d14">&#34;Best hyperparameters: </span><span style="color:#d14">{</span>study<span style="color:#000;font-weight:bold">.</span>best_params<span style="color:#d14">}</span><span style="color:#d14">&#34;</span>)
+</span></span></code></pre></div><p>Inside the <code>objective</code> function, we use the <code>suggest_loguniform</code>method of the <code>trial</code>object to define the search space for <code>C</code>and <code>gamma</code>. This method suggests values for the hyperparameters using a log-uniform distribution, which is often a good choice for hyperparameters that can span several orders of magnitude. We then create an Optuna <code>study</code>object with the <code>maximize</code>direction, which indicates that we want to maximize the objective function (i.e., maximize the test set accuracy).</p>
+
+
+
+
+<h3 id="hyperopt">Hyperopt
+  <a href="#hyperopt"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">hyperopt</span> <span style="color:#000;font-weight:bold">import</span> fmin, tpe, hp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>space <span style="color:#000;font-weight:bold">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#d14">&#39;C&#39;</span>: hp<span style="color:#000;font-weight:bold">.</span>loguniform(<span style="color:#d14">&#39;C&#39;</span>, <span style="color:#000;font-weight:bold">-</span><span style="color:#099">4</span>, <span style="color:#099">4</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#d14">&#39;gamma&#39;</span>: hp<span style="color:#000;font-weight:bold">.</span>loguniform(<span style="color:#d14">&#39;gamma&#39;</span>, <span style="color:#000;font-weight:bold">-</span><span style="color:#099">4</span>, <span style="color:#099">4</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">objective</span>(params):
+</span></span><span style="display:flex;"><span>    clf <span style="color:#000;font-weight:bold">=</span> SVC(C<span style="color:#000;font-weight:bold">=</span>params[<span style="color:#d14">&#39;C&#39;</span>], gamma<span style="color:#000;font-weight:bold">=</span>params[<span style="color:#d14">&#39;gamma&#39;</span>])
+</span></span><span style="display:flex;"><span>    clf<span style="color:#000;font-weight:bold">.</span>fit(X_train, y_train)
+</span></span><span style="display:flex;"><span>    score <span style="color:#000;font-weight:bold">=</span> clf<span style="color:#000;font-weight:bold">.</span>score(X_test, y_test)
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">return</span> {<span style="color:#d14">&#39;loss&#39;</span>: <span style="color:#000;font-weight:bold">-</span>score, <span style="color:#d14">&#39;status&#39;</span>: <span style="color:#d14">&#39;ok&#39;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>best <span style="color:#000;font-weight:bold">=</span> fmin(fn<span style="color:#000;font-weight:bold">=</span>objective, space<span style="color:#000;font-weight:bold">=</span>space, algo<span style="color:#000;font-weight:bold">=</span>tpe<span style="color:#000;font-weight:bold">.</span>suggest, max_evals<span style="color:#000;font-weight:bold">=</span><span style="color:#099">100</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">print</span>(<span style="color:#d14">f</span><span style="color:#d14">&#34;Best hyperparameters: </span><span style="color:#d14">{</span>best<span style="color:#d14">}</span><span style="color:#d14">&#34;</span>)
+</span></span></code></pre></div><p>We define a search space dictionary <code>space</code> with the <code>hp.loguniform</code> method of Hyperopt. This method is similar to Optuna&rsquo;s <code>suggest_loguniform</code> method and defines a log-uniform distribution for the hyperparameters. We also define an <code>objective</code> function that takes a dictionary of hyperparameters as input and returns a dictionary with a <code>loss</code> key (set to the negative accuracy score) and a <code>status</code> key set to <code>'ok'</code>.</p>
+<p>We call the <code>fmin</code> function of Hyperopt with the <code>objective</code> function, the search space, the <code>'tpe.suggest'</code> algorithm (which stands for Tree-structured Parzen Estimator), and the maximum number of evaluations to run (<code>max_evals=100</code>). This function performs the hyperparameter search and returns the best hyperparameters.</p>
+
+
+
+
+<h3 id="ray-tune">Ray Tune
+  <a href="#ray-tune"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">ray</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">ray</span> <span style="color:#000;font-weight:bold">import</span> tune
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">ray.tune</span> <span style="color:#000;font-weight:bold">import</span> grid_search
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">train_svm_tune</span>(config):
+</span></span><span style="display:flex;"><span>    clf <span style="color:#000;font-weight:bold">=</span> SVC(C<span style="color:#000;font-weight:bold">=</span>config[<span style="color:#d14">&#39;C&#39;</span>], gamma<span style="color:#000;font-weight:bold">=</span>config[<span style="color:#d14">&#39;gamma&#39;</span>])
+</span></span><span style="display:flex;"><span>    clf<span style="color:#000;font-weight:bold">.</span>fit(X_train, y_train)
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">return</span> clf<span style="color:#000;font-weight:bold">.</span>score(X_test, y_test)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>config <span style="color:#000;font-weight:bold">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#d14">&#39;C&#39;</span>: grid_search([<span style="color:#099">0.1</span>, <span style="color:#099">1</span>, <span style="color:#099">10</span>, <span style="color:#099">100</span>]),
+</span></span><span style="display:flex;"><span>    <span style="color:#d14">&#39;gamma&#39;</span>: grid_search([<span style="color:#099">0.01</span>, <span style="color:#099">0.1</span>, <span style="color:#099">1</span>, <span style="color:#099">10</span>])
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>analysis <span style="color:#000;font-weight:bold">=</span> tune<span style="color:#000;font-weight:bold">.</span>run(
+</span></span><span style="display:flex;"><span>    train_svm_tune,
+</span></span><span style="display:flex;"><span>    config<span style="color:#000;font-weight:bold">=</span>config,
+</span></span><span style="display:flex;"><span>    metric<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;mean_accuracy&#39;</span>,
+</span></span><span style="display:flex;"><span>    mode<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;max&#39;</span>,
+</span></span><span style="display:flex;"><span>    num_samples<span style="color:#000;font-weight:bold">=</span><span style="color:#099">100</span>,
+</span></span><span style="display:flex;"><span>    resources_per_trial<span style="color:#000;font-weight:bold">=</span>{<span style="color:#d14">&#39;cpu&#39;</span>: <span style="color:#099">1</span>},
+</span></span><span style="display:flex;"><span>    local_dir<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;./tune_results&#39;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">print</span>(<span style="color:#d14">f</span><span style="color:#d14">&#34;Best hyperparameters: </span><span style="color:#d14">{</span>analysis<span style="color:#000;font-weight:bold">.</span>best_config<span style="color:#d14">}</span><span style="color:#d14">&#34;</span>)
+</span></span></code></pre></div><p>The <code>train_svm_tune</code> function performs the hyperparameter search using Ray Tune and returns an <code>Analysis</code> object that contains the results of the search.</p>
+<p>We define a configuration dictionary <code>config</code> with two hyperparameters, <code>C</code> and <code>gamma</code>, and use the <code>grid_search</code> function of Ray Tune to define a discrete search space for each hyperparameter.</p>
+<p>We then call the <code>tune.run</code> function of Ray Tune with the <code>train_svm_tune</code> function, the configuration dictionary, the <code>metric</code> parameter set to <code>'mean_accuracy'</code> (which tells Ray Tune to use the mean of the accuracy scores as the optimization metric), the <code>mode</code> parameter set to <code>'max'</code> (which indicates that we want to maximize the optimization metric), the <code>num_samples</code> parameter set to <code>100</code> (which sets the number of trials to run), the <code>resources_per_trial</code> parameter set to <code>{'cpu': 1}</code> (which specifies the amount of CPU resources to allocate to each trial), and the <code>local_dir</code> parameter set to <code>'./tune_results'</code> (which specifies the directory to store the results).</p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">March 9, 2023</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">6 minute read, 1229 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="/categories/machine-learning">machine learning</a>  <a href="/categories/python">python</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="/blog/2023-03-08-understanding-the-importance-of-model-explainability-in-machine-learning/">Understanding the Importance of Model Explainability in Machine Learning &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+  </section>
+  	<div class="relative flex py-5 items-center">
+	</div>
+	<div class="flex justify-center">
+		<p style="margin-bottom: 1em;"><b>Support my work with a cup of ☕</b></p>
+	</div>
+	<div class="flex justify-center">
+		<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Donate', '#4c7021', 'N4N1EM0G5');kofiwidget2.draw();</script>
+	</div>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2023 Thomas Shaw
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/thomassshaw" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://medium.com/@thomassshaw" title="medium" target="_blank" rel="me noopener">
+      <i class="fab fa-medium fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/blog/index.xml" title="rss" >
+      <i class="fas fa-rss fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Contact form">Contact</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

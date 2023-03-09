@@ -5,7 +5,7 @@ action_type: text
 description: Data Science | Artificial Intelligence | Programming
 image_left: false
 images:
-- img/revoir.jpg
+- img/outlier.jpg
 show_action_link: true
 show_social_links: true
 subtitle: 

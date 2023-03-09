@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Latest Post on Outlier Blog</title>
+    <title>Blog on Outlier Blog</title>
     <link>/blog/</link>
-    <description>Recent content in Latest Post on Outlier Blog</description>
+    <description>Recent content in Blog on Outlier Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 02 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 09 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>4 Hyperparameters Optimization Frameworks for Machine Learning</title>
+      <link>/blog/2023-03-09-4-hyperparameters-optimization-frameworks-for-machine-learning/</link>
+      <pubDate>Thu, 09 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2023-03-09-4-hyperparameters-optimization-frameworks-for-machine-learning/</guid>
+      <description>Machine learning models rely heavily on hyperparameters, which are essentially the configuration settings that control the performance and the behavior of the model. Properly tuning these hyperparameters can lead to significant improvements in the model&amp;rsquo;s accuracy and overall performance. However, manual tuning of hyperparameters is hard can be a time-consuming task, often requiring many iterations and experimentation. That&amp;rsquo;s where hyperparameter optimization frameworks come into play, which help automate the process of finding the optimal set of hyperparameters for a machine learning model.</description>
+    </item>
+    
+    <item>
+      <title>Understanding the Importance of Model Explainability in Machine Learning</title>
+      <link>/blog/2023-03-08-understanding-the-importance-of-model-explainability-in-machine-learning/</link>
+      <pubDate>Wed, 08 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2023-03-08-understanding-the-importance-of-model-explainability-in-machine-learning/</guid>
+      <description>Machine learning has become an essential tool for businesses and organizations to gain insights and make predictions based on large amounts of data. It has been widely adopted across industries to solve problems, optimize processes, and make more accurate predictions. However, as machine learning models become more complex, it becomes increasingly difficult to understand how they arrive at their decisions. Put simply, model explainability refers to the ability to understand and explain how a machine learning model arrives at its predictions or decisions.</description>
+    </item>
+    
     <item>
       <title>Understanding Confusion Matrix</title>
       <link>/blog/2023-03-02-understanding-confusion-matrix/</link>
