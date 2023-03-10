@@ -7,7 +7,7 @@ categories:
   - machine learning
 tags: []
 subtitle: ''
-excerpt: ''
+excerpt: Model explainability is important for building trust in the model's predictions to ensuring compliance with legal requirements.
 draft: no
 series: ~
 layout: single

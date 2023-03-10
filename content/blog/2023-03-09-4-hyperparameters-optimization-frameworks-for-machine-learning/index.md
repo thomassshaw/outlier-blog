@@ -8,7 +8,7 @@ categories:
   - python
 tags: []
 subtitle: ''
-excerpt: 'Choosing the right hyperparameters can make or break a model’s performance.'
+excerpt: Choosing the right hyperparameters can make or break a model’s performance.
 draft: no
 series: ~
 layout: single
